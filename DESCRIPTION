@@ -1,0 +1,21 @@
+Package: hdcdwithmissingvalues
+Title: Change Point Detection in GMMs in presence of missing values
+Version: 0.0
+Authors@R: person("Malte", "Londschien", email = "lmalte@ethz.ch", role = c("aut", "cre"))
+Description: This package can be used to find change points in possibly high dimensional GGMs with missing values
+Depends: R (>= 3.5.1)
+License: none
+Encoding: UTF-8
+LazyData: true
+Imports:
+    MASS,
+    glasso,
+    data.tree,
+    TSP,
+    clues,
+    data.table,
+    ggplot2,
+    Matrix
+Suggests: 
+    testthat,
+RoxygenNote: 6.1.1

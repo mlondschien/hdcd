@@ -1,0 +1,15 @@
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda section average full 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda section loh full 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda section pair full 0.025 1> out"
+
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda line average full 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda line loh full 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda line pair full 0.025 1> out"
+
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda section average 50 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda section loh 50 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda section pair 50 0.025 1> out"
+
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda line average 50 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda line loh 50 0.025 1> out"
+bsub -W 24:00 "R --vanilla --slave <gwlevels.R gw_4_big_lambda line pair 50 0.025 1> out"

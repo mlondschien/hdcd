@@ -1,0 +1,11 @@
+bsub -W 24:00 "R --vanilla --slave <snplogreturns.R snp_2 section average 0.025 0.2 1> out"
+bsub -W 24:00 "R --vanilla --slave <snplogreturns.R snp_2 section loh 0.025 0.2 1> out"
+bsub -W 24:00 "R --vanilla --slave <snplogreturns.R snp_2 section pair 0.025 0.2 1> out"
+
+bsub -W 120:00 "R --vanilla --slave <snplogreturns.R snp_2 line average 0.025 0.2 1> out"
+bsub -W 120:00 "R --vanilla --slave <snplogreturns.R snp_2 line loh 0.025 0.2 1> out"
+bsub -W 120:00 "R --vanilla --slave <snplogreturns.R snp_2 line pair 0.025 0.2 1> out"
+
+bsub -W 24:00 "R --vanilla --slave <snplogreturns.R snp_2 section average 0.025 0.01 1> out"
+bsub -W 24:00 "R --vanilla --slave <snplogreturns.R snp_2 section loh 0.025 0.01 1> out"
+bsub -W 24:00 "R --vanilla --slave <snplogreturns.R snp_2 section pair 0.025 0.01 1> out"

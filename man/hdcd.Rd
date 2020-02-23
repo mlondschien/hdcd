@@ -62,5 +62,5 @@ computational cost allows this and Section Search else.
 Find change points in a design matrix
 }
 \examples{
-hdcd(x, method = 'glasso', optimizer = 'line_search', delta = 0.1, lambda = 1, control = hdcd_method(glasso_NA_method = 'pairwise'))
+hdcd(x, method = 'glasso', optimizer = 'line_search', delta = 0.1, lambda = 1, control = hdcd_control(glasso_NA_method = 'pairwise'))
 }

@@ -31,6 +31,7 @@ get_cov_mat <- function(x, NA_method = c("complete_observations", "pairwise_cova
                   inds = rep(T, ncol(x)), n_eff_obs = n_obs))
     }
     
+    
   } else {
     
     # calculate available entries for each column

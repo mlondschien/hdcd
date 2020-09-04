@@ -1,19 +1,22 @@
 #' Simulate Observations from a model created by create_model
-#' 
+#'
 #' @param model An object as created by \link{create_model}
 #'
 #' @return A n times p matrix of simulated data.
 #' @export
 simulate_from_model <- function(model) {
-  
   segment_lengths <- model$segment_lengths
   
-  data <- matrix(NA, nrow = sum(segment_lengths), ncol = length(model[["segment_means"]][[1]]))
+  data <-
+    matrix(NA,
+           nrow = sum(segment_lengths),
+           ncol = length(model[["segment_means"]][[1]]))
   
   for (i in seq_along(segment_lengths)) {
     seg_start <- ifelse(i == 1, 1, sum(segment_lengths[(i - 1):1]) + 1)
     seg_end <- seg_start + segment_lengths[i] - 1
-    data[seg_start:seg_end, ] <- MASS::mvrnorm(segment_lengths[[i]], model[["segment_means"]][[i]], model[["cov_mats"]][[i]])
+    data[seg_start:seg_end,] <-
+      MASS::mvrnorm(segment_lengths[[i]], model[["segment_means"]][[i]], model[["cov_mats"]][[i]])
   }
   return(data)
 }
@@ -33,36 +36,48 @@ simulate_from_model <- function(model) {
 #'
 #' @return An object to be used by \link{simulate_from_model}
 #' @export
-create_model <- function(n, p, changepoints, model_function, mean_vecs = NULL, ...) {
-  
-  model_args <- list(...)
-  
-  # make sure changepoints are adapt to setting
-  if(!(length(changepoints) == 0 || (changepoints < n))){
-    stop('Changepoints cannot be greater than n')
+create_model <-
+  function(n,
+           p,
+           changepoints,
+           model_function,
+           mean_vecs = NULL,
+           ...) {
+    model_args <- list(...)
+    
+    # make sure changepoints are adapt to setting
+    if (!(length(changepoints) == 0 || (changepoints < n))) {
+      stop('Changepoints cannot be greater than n')
+    }
+    
+    if (!is.null(mean_vecs) &&
+        length(mean_vecs) != length(changepoints) + 1) {
+      stop('Please make sure mean_vecs is a list with one element for each segment')
+    }
+    
+    if (is.null(mean_vecs)) {
+      mean_vecs <-
+        replicate(length(changepoints) + 1, rep(0, p), simplify = F)
+    }
+    
+    segment_lengths <-
+      c(changepoints - c(0, changepoints[-length(changepoints)]), n - changepoints[length(changepoints)])
+    
+    if (length(segment_lengths) == 0) {
+      segment_lengths <- n
+    }
+    cov_mats <-
+      replicate(length(changepoints) + 1,
+                do.call(model_function, c(list(p = p), model_args)),
+                simplify = F)
+    
+    list(
+      segment_lengths = segment_lengths,
+      segment_means = mean_vecs,
+      cov_mats = cov_mats,
+      true_changepoints = changepoints
+    )
   }
-  
-  if (!is.null(mean_vecs) && length(mean_vecs) != length(changepoints) + 1){
-    stop('Please make sure mean_vecs is a list with one element for each segment')
-  }
-  
-  if (is.null(mean_vecs)){
-    mean_vecs <- replicate(length(changepoints) + 1, rep(0, p), simplify = F)
-  }
-
-  segment_lengths <- c(changepoints - c(0, changepoints[-length(changepoints)]), n - changepoints[length(changepoints)])
-  
-  if(length(segment_lengths) == 0){
-    segment_lengths <- n
-  }
-  cov_mats <- replicate(length(changepoints) + 1, do.call(model_function, c(list(p = p), model_args)), simplify = F)
-  
-  list(
-    segment_lengths = segment_lengths,
-    segment_means = mean_vecs,
-    cov_mats = cov_mats,
-    true_changepoints = changepoints)
-}
 
 #' Delete values from a design matrix
 #' 

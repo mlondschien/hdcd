@@ -82,7 +82,7 @@ hdcd <- function(x,
       lambda <- max(abs(cov_mat[upper.tri(cov_mat)])) / 10
       warning('Lambda for glassocd set by asymptotic theory to ', lambda)
     }
-    if(control$cv_inner){
+    if(control$glasso_cv_inner){
       cross_validation_function <- glasso_cross_validation_function
     } else { 
       cross_validation_function <- NULL

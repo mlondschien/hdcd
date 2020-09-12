@@ -205,7 +205,7 @@ glasso_gain_function <-
     
     fit_global <-
       get_glasso_fit(x[(start + 1):end, , drop = F], lambda = lambda, control = control)
-    
+
     function(split_point, split_candidates = split_point) {
       fit_left <-
         get_glasso_fit(x[(start + 1):split_point, , drop = F], lambda = lambda, control = control)

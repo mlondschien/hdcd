@@ -10,8 +10,7 @@
 #' @export
 classifier_best_split_function <-
   function(classifier, optimizer, control) {
-    stopifnot(optimizer %
-              in% c('section_search', 'line_search', 'two_step_search'))
+    stopifnot(optimizer %in% c('section_search', 'line_search', 'two_step_search'))
     
     function(x, start, end, split_candidates, lambda = 0) {
       # Sequence of checks to avoid unwanted behaviour

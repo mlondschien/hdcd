@@ -99,7 +99,7 @@ glasso_cross_validation_function <-
   function(x, start, end, lambda, folds, control) {
     # get parameters
     n_folds <- control$cv_inner_n_folds
-    search_lambda_inner <- control$cv_inner_search_lambda
+    search_lambda_inner <- T # control$cv_inner_search_lambda
     lambda_inner_step <- control$cv_inner_lambda_step
     lambda_inner <- control$cv_inner_lambda
     

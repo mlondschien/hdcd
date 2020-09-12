@@ -69,6 +69,8 @@ hdcd <- function(x,
     x <- as.matrix(x)
     warning('x has been coerced to matrix by hdcd')
   }
+
+  control$n = length(x)
   
   if(method == 'RFcd'){
     get_best_split <- classifier_best_split_function(classifier = random_forest, optimizer = optimizer, control = control)
@@ -76,7 +78,7 @@ hdcd <- function(x,
   } else if (method == 'kNNcd'){
     get_best_split <- best_split_function_from_gain_function(kNN_gain_function(x, control), optimizer, control)
     cross_validation_function <- NULL
-  } else if (method == 'glassocd'){
+  } else if (method == 'glasso'){
     if(is.null(lambda)){
       cov_mat <- get_cov_mat(x, control$glasso_NA_method)$mat
       lambda <- max(abs(cov_mat[upper.tri(cov_mat)])) / 10
@@ -88,6 +90,8 @@ hdcd <- function(x,
       cross_validation_function <- NULL
     }
     get_best_split <- best_split_function_from_gain_function(glasso_gain_function, optimizer, control)
+  } else {
+    stop("method should be one of 'glasso', 'RFcd' or 'kNNcd'. Got %s", method)
   }
   
   tree <- binary_segmentation(x = x, gamma = gamma,

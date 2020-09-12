@@ -23,7 +23,7 @@ binary_segmentation <-
     
     n <- nrow(x)
     minimal_segment_length <- ceiling(delta * n)
-    
+
     # get a data.frame of start - end pairs for which gains and optimal splits will be calculated.
     # Only relevant for SBS or WBS, will contain one segment (0, n] for BS
     segments <- data.table::as.data.table(
@@ -139,7 +139,7 @@ binary_segmentation <-
                              })
                            ))
       }
-      
+  
       best_segment <-
         segments[start >= node$start &
                    end <= node$end, ][unlist(max_gain) == max(unlist(max_gain))][1]
@@ -147,7 +147,7 @@ binary_segmentation <-
       node$gain <- unlist(best_segment$gain)
       node$split_point <- unlist(best_segment$best_split)
       node$max_gain <- unlist(best_segment$max_gain)
-      
+
       if (control$permutation_test) {
         node$permutation_test <-
           apply(matrix(unlist(segments[start >= node$start &

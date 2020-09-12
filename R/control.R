@@ -32,7 +32,7 @@ hdcd_control <- function(glasso_cv_inner = TRUE,
                          #
                          classifier_oob = TRUE,
                          #
-                         # section_search_min_points = 5,
+                         section_search_min_points = 5,
                          section_search_stepsize = 0.1,
                          #
                          random_forest_n_tree = 600,
@@ -45,7 +45,7 @@ hdcd_control <- function(glasso_cv_inner = TRUE,
                          wbs_n_segments = 100,
                          sbs_alpha = 1 / sqrt(2),
                          #
-                         permutation_test = TRUE,
+                         permutation_test = FALSE,
                          permutation_test_pvalue = 0.05,
                          permutation_test_n = 400) {
   structure(
@@ -60,7 +60,7 @@ hdcd_control <- function(glasso_cv_inner = TRUE,
       #
       classifier_oob = classifier_oob,
       #
-      # section_search_min_points = 5,
+      section_search_min_points = 5,
       section_search_stepsize = section_search_stepsize,
       #
       random_forest_n_tree = random_forest_n_tree,

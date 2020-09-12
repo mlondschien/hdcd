@@ -202,7 +202,7 @@ get_glasso_fit <- function(x, lambda, control) {
   } else {
     rho <- lambda/sqrt(obs_share)
   }
-  
+
   glasso_output <- glasso::glasso(out$cov_mat[out$inds, out$inds, drop = F], 
                                   rho = rho, penalize.diagonal = penalize_diagonal, thr = threshold)
   

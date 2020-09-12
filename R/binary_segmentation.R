@@ -41,7 +41,7 @@ binary_segmentation <-
       list(mapply(function(start, end) {
         list((start + minimal_segment_length):(end - minimal_segment_length))
       }, segments$start, segments$end))
-    
+
     # calculate gain, best split, ... for all segments and add to segments
     gains <-
       mapply(
@@ -83,7 +83,7 @@ binary_segmentation <-
           folds = tree$folds,
           control = control
         )
-      if (is.null(temp$cv_loss) | is.null(temp$lambda_opt)) {
+      if (is.null(temp$cv_loss) | is.na(temp$cv_loss) | is.null(temp$lambda_opt) | is.na(temp$lambda_opt)) {
         stop(
           "cross_validation_function is not of the required form. Make sure
           cross_validation_function returns a list with
@@ -105,7 +105,7 @@ binary_segmentation <-
       if (segment_length < 2 * minimal_segment_length) {
         return(NA)
       }
-      
+
       # If there is no entry in segments corresponding to the current segment, add a row and calculate
       # the gain and best split. In case of binary segmentation, the resulting table segments will
       # comprise of exactly those segments found while splitting.
@@ -113,16 +113,16 @@ binary_segmentation <-
                segments$end == node$end)) {
         split_candidates <-
           (node$start + minimal_segment_length):(node$end - minimal_segment_length)
-        
+
         temp <-
           get_best_split(
             x = x,
             start = node$start,
             end = node$end,
             split_candidates = split_candidates,
-            lambda = lambda
+            lambda = node$lambda
           )
-        
+
         segments <<- rbind(segments,
                            c(
                              list(

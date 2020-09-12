@@ -98,24 +98,24 @@ classifier_loglikelihood <-
 glasso_cross_validation_function <-
   function(x, start, end, lambda, folds, control) {
     # get parameters
-    n_folds <- control$cv_inner_n_folds
-    search_lambda_inner <- T # control$cv_inner_search_lambda
-    lambda_inner_step <- control$cv_inner_lambda_step
-    lambda_inner <- control$cv_inner_lambda
+    lambda_inner_step <- control$glasso_cv_inner_lambda_stepsize
+    # lambda_inner <- NULL  # not used
     
     stopifnot(length(folds) == nrow(x))
     
     folds_current <- folds[(start + 1):end]
-    
+    n_folds = length(unique(folds_current))
+
     # function that returns a matrix of dimension (n_folds, length(lambda)) with respective losses
     evaluate_fit <- function(lambda) {
       # prepare matrix to store values in later
       out <-
-        array(NA, dim = c(length(unique(folds)), length(lambda)))
+        array(NA, dim = c(n_folds, length(lambda)))
       
       # iterate over folds and lambdas
       for (l in 1:length(lambda)) {
-        for (i in as.integer(unique(folds_current))) {
+        for (j in n_folds) {
+          i <- as.integer(unique(folds_current))[j]
           glasso_fit <-
             get_glasso_fit(x[(start + 1):end, , drop = F][folds_current != i, , drop = F], lambda[l], control)
           out[i, l] <-
@@ -132,7 +132,7 @@ glasso_cross_validation_function <-
     }
     
     
-    if (search_lambda_inner) {
+    if (TRUE) {
       # if search_lambda_inner is true, we search for an optimal lambda by adjusting lambda0 in steps of size
       # lambda_inner_step until a valley is reached
       lambda <-

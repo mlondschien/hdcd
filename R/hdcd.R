@@ -2,7 +2,6 @@
 #'
 #' Find (non-parametric) breaks in the distribution of a time series using Random Forest Classifiers
 #' 
-#'@export
 #'@inheritParams hdcd
 RFcd <- function(x, delta = 0.1, control = hdcd_control()){
   
@@ -24,7 +23,6 @@ RFcd <- function(x, delta = 0.1, control = hdcd_control()){
 #' Find (non-parametric) breaks in the distribution of a time series using k-Nearest Neigbor Classifiers
 #' 
 #' @inheritParams RFcd
-#' @export  
 kNNcd <- function(x, delta = 0.1, control = hdcd_control()){
   
   tree <- hdcd(x = x,
@@ -54,6 +52,7 @@ kNNcd <- function(x, delta = 0.1, control = hdcd_control()){
 #' One of \code{line_search} for BS or similar, \code{section_search} for OBS or similar or \code{two_step_search}.
 #' @param segmentation Segmentation method to be used. One of \code{BS}, \code{SBS} or \code{WBS}.
 #' @param control Control parameter as returned by \link{hdcd_control}
+#' @export
 hdcd <- function(x,
                  delta = 0.1, 
                  gamma = 0,

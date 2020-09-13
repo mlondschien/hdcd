@@ -7,7 +7,6 @@
 #' @param classifier A function with formal arguments \code{x_train}, \code{y_train} and \code{control} that returns class probabilities in
 #' a matrix of size nrow(x_train) x k, where k is the number of classes in y_train.
 #' @inheritParams hdcd
-#' @export
 classifier_best_split_function <-
   function(classifier, optimizer, control) {
     stopifnot(optimizer %in% c('section_search', 'line_search', 'two_step_search'))
@@ -84,7 +83,6 @@ classifier_best_split_function <-
 #' using the optimizer \code{optimizer}.
 #'
 #' @inheritParams hdcd
-#' @export
 kNN_best_split_function <- function(x, control) {
   distance_matrix <-
     as.matrix(dist(x)) # calculate pairwise distances of all observations

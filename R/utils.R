@@ -3,7 +3,6 @@
 #' @param n number of observations
 #' @param k number of folds
 #' @param randomize should folds be randomized? Equispaced folds are returned for randomize = FALSE
-#' @export
 sample_folds <- function(n, k, randomize = FALSE) {
   if (k == 1) {
     as.factor(rep(0, n))
@@ -34,7 +33,6 @@ log_eps <- function(x, threshold = exp(-6)) {
 #' @param from the starting value of the sequence
 #' @param to the end value of the sequence
 #' @param length.out the length of the sequence
-#' @export
 log_space <- function(from, to, length.out) {
   exp(seq(
     from = log(from),
@@ -145,7 +143,6 @@ draw_segments <-
 #'
 #' Efficiently calculates the gain in a one-dimensional shift in mean and variance scenario.
 #'
-#' @export
 #' @param x Array with entries that are assumed to have a shift in mean and variance at some split point.
 #' @param alpha array of segment boundaries
 #' @param train_fold array containing indices in training fold
@@ -153,22 +150,22 @@ draw_segments <-
 #'
 #' The negative gaussian loglikelihood of observations x for estimated mean and variance is \eqn{-n/2 * (log(2 \pi \hat\sigma^2) + 1)}.
 #' The gaussian maximum likelihood estimate \eqn{\hat\sigma^2} is \code{(sum(x^2) - sum(x)^2/length(x))/length(x)}
-# shift_in_mean_and_variance <- function(x, ...){
-#   y <- x[!is.na(x)]
-#   n <- length(y)
-#   cumsum_x <- cumsum(y)
-#   cumsum_x_2 <- cumsum(y ^ 2)
-#
-#   sigma_1 <- cumsum_x_2 / (1 : n) - cumsum_x ^ 2 / (1 : n) ^ 2
-#   sigma_2 <- (cumsum_x_2[n] - cumsum_x_2) / ((n - 1) : 0) - (cumsum_x[n] - cumsum_x) ^ 2 / ((n - 1) : 0)^2
-#   sigma_1 <- sigma_1 + 0.0001 * max(sigma_1[is.finite(sigma_1)])
-#   sigma_2 <- sigma_2 + 0.0001 * max(sigma_2[is.finite(sigma_2)])
-#   sigma_1[1] <- sigma_2[n] <- sigma_2[n-1] <- NA
-#
-#   gain <- rep(NA, length(x))
-#   gain[!is.na(x)] <- (log(sigma_1[n]) - (1:n)/n * log(sigma_1) - ((n-1):0)/n * log(sigma_2))
-#   gain
-# }
+shift_in_mean_and_variance <- function(x, ...){
+  y <- x[!is.na(x)]
+  n <- length(y)
+  cumsum_x <- cumsum(y)
+  cumsum_x_2 <- cumsum(y ^ 2)
+
+  sigma_1 <- cumsum_x_2 / (1 : n) - cumsum_x ^ 2 / (1 : n) ^ 2
+  sigma_2 <- (cumsum_x_2[n] - cumsum_x_2) / ((n - 1) : 0) - (cumsum_x[n] - cumsum_x) ^ 2 / ((n - 1) : 0)^2
+  sigma_1 <- sigma_1 + 0.0001 * max(sigma_1[is.finite(sigma_1)])
+  sigma_2 <- sigma_2 + 0.0001 * max(sigma_2[is.finite(sigma_2)])
+  sigma_1[1] <- sigma_2[n] <- sigma_2[n-1] <- NA
+
+  gain <- rep(NA, length(x))
+  gain[!is.na(x)] <- (log(sigma_1[n]) - (1:n)/n * log(sigma_1) - ((n-1):0)/n * log(sigma_2))
+  gain
+}
 
 #' Divide data into training + testing data
 train_test_split <- function(x, alpha, train_fold = 1:nrow(x)) {

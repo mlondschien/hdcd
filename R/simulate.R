@@ -185,7 +185,6 @@ plot_missingness_structure <- function(x, order = F){
 #' @param model One if \code{Iris}, \code{Noise}, \code{Wine_1}, \code{Wine_2}, \code{RN},
 #' \code{CIM} or \code{CIC}
 #' @param seed seed used for dataset creation
-#' @export
 simulate_non_parametric <- function(model, seed){
   
   set.seed(seed)

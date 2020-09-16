@@ -27,7 +27,6 @@ cat('Running Simulation with comment = ', comment, ', seed = ', seed,', Network 
 stopifnot(sum(segment_lengths) == n)
 
 # load library
-library('hdcd', lib.loc = '../R/x86_64-slackware-linux-gnu-library/')
 library(data.table)
 
 # evaluate function

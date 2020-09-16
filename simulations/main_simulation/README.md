@@ -1,7 +1,7 @@
 ## README
 This folder contains files required to replicate the main simulation results (Tables 1, 2) of [Change point detection for graphical models in presenceof missing values](https://arxiv.org/pdf/1907.05409.pdf). The file `simulation.R` needs to be called with 14 arguments `comment`, `n`, `p`, `Network`, `NA_method`, `optimizer`, `deletion`, `delete_fraction`, `seed`, `nrep`, `n_of_segments`, `segment_lengths`, e.g.
 ```
-R simulation.R rfcd_9 500 100 RandomNetwork pair line mcar 0.1 2 100 4 70 120 120 190
+R --vanilla --slave <simulation.R rfcd_9 500 100 RandomNetwork pair section_search mcar 0.1 2 100 4 70 120 120 190 >
 ```
 The results of the simulation will be stored in an `rds` file.
 

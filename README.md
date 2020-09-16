@@ -1,6 +1,5 @@
 # High-dimensional change point detection
-
-`hdcd` is a package for change point detection in (possibly high-dimensional) Gaussian Graphical Models (GGMs) with missing values. The paper is meant to accompany the paper _Change point detection for graphical models in presenceof missing values_ [1]. See  [here](https://arxiv.org/abs/1907.05409) for a preprint.
+`hdcd` is a package for change point detection in (possibly high-dimensional) Gaussian Graphical Models (GGMs) with missing values. The package accompanies the paper _Change point detection for graphical models in presenceof missing values_ [1]. See  [here](https://arxiv.org/abs/1907.05409) for a preprint.
 
 The package can be installed directly from github:
 ```R
@@ -19,7 +18,7 @@ x <- hdcd::simulate_from_model(model)
 
 We then use the main algorithm of this package to find change points in the GGM structure. Note that we specify `method="glasso"` to use the [glasso](https://cran.r-project.org/web/packages/glasso/index.html) package [2] to estimate within segment precision matrices and that we use the `"section_search"` optimizer (also known as optimistic binary segmentation, OBS). This reduces computation time drastically. We use the default value of `delta = 0.1` for minimal relative segment length and let `hdcd` find a suitable initial regularization parameter `lamdba`. Note that running `hdcd` might take a few seconds due to the high-dimensionality of the dataset.
 ```R
-tree <- hdcd(x, method="glasso", optimizer="section_search")
+tree <- hdcd::hdcd(x, method="glasso", optimizer="section_search")
 tree
 #                    levelName split_point max_gain   cv_loss cv_improvement     lambda
 # 1  (0 500]                           310 9.348791 14067.249      379.70836 0.06884284
@@ -38,7 +37,7 @@ tree
 # 14          ¦--(397 450]              NA       NA  1403.713             NA 0.27537134
 # 15          °--(450 500]              NA       NA  1395.333             NA 0.27537134
 ```
-The return object is a `binary_segmentation_tree`, which inherits from `data.tree::Node`. Each node in the tree corresponds to one segment, with notable attributes `start`, `split_point`, `end`, `gain` and `max_gain`. In our setting each node also has an attribute `cv_improvement`, which is calculated as the cross validated increase in likelihood when splitting the segment `(start, end]` at `split_point`. The attribute `lambda` is the regularization parameter optimal as determined by the cross validation procedure and used for the given segment for splitting. The `hdcd` algorithm stops splitting when `cv_improvement <= 0`. Note that `split_point`s with positive `cv_improvement` are given as 310, 120, 240, 397, which are exactly the true underlying change points up to one false positive. These can be extracted from the `tree` with the method `hdcd::get_change_points_from_tree`. 
+The return object is a `binary_segmentation_tree`, which inherits from `data.tree::Node`. Each node in the tree corresponds to one segment, with notable attributes `start`, `split_point`, `end`, `gain` and `max_gain`. In our setting using the glasso method each node also has an attribute `cv_improvement`, which is calculated as the cross validated increase in likelihood when splitting the segment `(start, end]` at `split_point`. The attribute `lambda` is the regularization parameter optimal as determined by the cross validation procedure and used for the given segment for splitting. The `hdcd` algorithm stops splitting when `cv_improvement <= 0`. Note that `split_point`s with positive `cv_improvement` are given as 310, 120, 240, 397, which are exactly the true underlying change points up to one false positive. These can be extracted from the `tree` with the method `hdcd::get_change_points_from_tree`. 
 
 ```R
 hdcd::get_change_points_from_tree(tree)
@@ -46,7 +45,6 @@ hdcd::get_change_points_from_tree(tree)
 ```
 
 ## Missing values
-
 The `hdcd` algorithm can also handle missing values. We delete 30% of entries of the matrix `x` completely at random and run our algorithm again. We use the Loh-Wainwrigth bias corrected approach to impute covariance matrices, which is the default value.
 
 ```R
@@ -70,3 +68,10 @@ tree_deleted
 hdcd::get_change_points_from_tree(tree)
 # [1]  64 120 240 310
 ```
+## Simulations and plots
+The folder `simulations` contains all R-scripts used to create plots and tables of [1].
+
+## References
+[1] M. Londschien, S. Kovacs and P. Buhlmann (2019), "Change point detection for graphical models in presenceof missing values", [arXiv:1907.05409](https://arxiv.org/abs/1907.05409)
+
+[2] J. Friedman, T. Hastie and R. Tibshirani (2008), “Sparse inverse covariance estimation with thegraphical lasso", Biostatistics, 9, 432–441

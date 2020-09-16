@@ -2,7 +2,7 @@
 
 args <- commandArgs(FALSE)
 
-# args <- c(0,0,0,'test', 500, 100, 'ChainNetwork', 'average', 'section', 'blockwise', '0.2', '2', '1', '4', '70', '120', '120', '190')
+# args <- c(0,0,0,'test', 500, 100, 'ChainNetwork', 'average', 'section_search', 'blockwise', '0.2', '2', '1', '4', '70', '120', '120', '190')
 # args <- c(0,0,0,'test', 100, 100, 'RandomNetwork', 'pair', 'line', 'mcar', '0.3', '2', '1', '1', '100')
 comment <- args[4]
 n <- as.integer(args[5])
@@ -27,7 +27,7 @@ cat('Running Simulation with comment = ', comment, ', seed = ', seed,', Network 
 stopifnot(sum(segment_lengths) == n)
 
 # load library
-library('hdcdwithmissingvalues', lib.loc = '../R/x86_64-slackware-linux-gnu-library/')
+library('hdcd', lib.loc = '../R/x86_64-slackware-linux-gnu-library/')
 library(data.table)
 
 # evaluate function
@@ -52,21 +52,21 @@ for (i in 1 : nrep){
   alpha <- cumsum(segment_lengths)[-n_of_segments] # set of change points
   
   # draw training dataset
-  x <- hdcdwithmissingvalues::simulate_from_model(hdcdwithmissingvalues::create_model(n, p, alpha, Network_fun))
+  x <- hdcd::simulate_from_model(hdcd::create_model(n, p, alpha, Network_fun))
 
   # delete values from training dataset
-  x_del <- hdcdwithmissingvalues::delete_values(x, delete_fraction, deletion)
+  x_del <- hdcd::delete_values(x, delete_fraction, deletion)
   
-  tree <- hdcdwithmissingvalues::hdcd(x_del, method = 'glasso', lambda = 0.1, delta = 0.1, optimizer = optimizer,
-             control = hdcdwithmissingvalues::hdcd_control(cv_inner = T, cv_inner_search_lambda = T, segment_loss_min_points = 5, section_search_min_points = 5, glasso_NA_method = NA_method))
+  tree <- hdcd::hdcd(x_del, method = 'glasso', lambda = 0.1, delta = 0.1, optimizer = optimizer,
+             control = hdcd::hdcd_control(cv_inner = T, cv_inner_search_lambda = T, segment_loss_min_points = 5, section_search_min_points = 5, glasso_NA_method = NA_method))
   
   # save the true change points in a list
   true_cpts <- list(alpha)
   # extract the found change points from the tree
-  found_cpts <- list(hdcdwithmissingvalues::get_change_points_from_tree(tree, variable = 'cv_improvement'))
+  found_cpts <- list(hdcd::get_change_points_from_tree(tree))
   
   # get adj. Rand Index and other performance measures
-  performance_measure <- hdcdwithmissingvalues::compare_change_points(alpha, found_cpts[[1]], n)
+  performance_measure <- hdcd::compare_change_points(alpha, found_cpts[[1]], n)
   
   data <- rbind(data,
                 data.table::data.table(seed = 10000 * seed + i,

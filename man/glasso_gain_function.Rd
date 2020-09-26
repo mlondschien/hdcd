@@ -22,12 +22,12 @@ A closure with parameters \code{x}, \code{start} and \code{end}, that when evalu
 will itself return a closure with parameter \code{split_point}. This calculates the gain when
 splitting the segment \code{(start, end]} of \code{x} at \code{split_point}. If the closure is
 additionally supplied with \code{evaluate_all = TRUE}, an array of length \code{nrow(x)} is
-returned with differences of loglikelihoods for each observation in \code{(start, end]} when split at 
+returned with differences of loglikelihoods for each observation in \code{(start, end]} when split at
 \code{split_point}.
 Glasso Gain Function
 
 A closure with parameters \code{x}, \code{start} and \code{end}, that when evaluated
-will itself return a closure with arguments \code{split_point} and \code{split_candidates}. 
+will itself return a closure with arguments \code{split_point} and \code{split_candidates}.
 Evaluated this function returns the gain when splitting the segment \code{(start, end]} of \code{x}
  at \code{split_point}.
 }

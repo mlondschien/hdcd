@@ -19,7 +19,7 @@ binary_segmentation(
 \item{x}{An n x p data matrix}
 
 \item{get_best_split}{A function with arguments \code{x}, \code{start}, \code{end}, \code{split_candidates} and \code{lambda}, that returns a list with
-entries gain, max_gain, best_split and possibly permutation_test and pval.}
+entries \code{gain}, \cope{max_gain}, \code{best_split} and possibly \code{permutation_test} and \code{pval}.}
 
 \item{delta}{Minimal relative segment length, defaults to 0.1}
 
@@ -29,7 +29,7 @@ entries gain, max_gain, best_split and possibly permutation_test and pval.}
 
 \item{segmentation}{Segmentation method to be used. One of \code{BS}, \code{SBS} or \code{WBS}.}
 
-\item{cross_validation_function}{A function with arguments \code{x}, \code{start}, \code{end}, \code{lambda}, \code{folds}, \code{control}}
+\item{cross_validation_function}{A function with arguments \code{x}, \code{start}, \code{end}, \code{lambda}, \code{folds} and \code{control}}
 
 \item{control}{Control parameter as returned by \link{hdcd_control}}
 }

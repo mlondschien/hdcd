@@ -20,7 +20,7 @@ a matrix of size nrow(x_train) x k, where k is the number of classes in y_train.
 }
 \value{
 A closure with parameters \code{x}, \code{start} and \code{end}, that when evaluated
-will itself return a closure with arguments \code{split_point} and \code{split_candidates}. 
+will itself return a closure with arguments \code{split_point} and \code{split_candidates}.
 Evaluated this function returns the gain when splitting the segment \code{(start, end]} of \code{x}
  at \code{split_point}.
 }

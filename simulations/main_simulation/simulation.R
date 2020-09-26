@@ -30,7 +30,7 @@ stopifnot(sum(segment_lengths) == n)
 library(data.table)
 
 # evaluate function
-Network_fun <- eval(parse(text = Network))
+Network_fun <- eval(parse(text = paste0("hdcd::", Network)))
 
 # if we delete no values, we scale down the segment lengths and total number of observations (for comparison)
 if(deletion == 'none'){

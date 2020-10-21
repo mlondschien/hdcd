@@ -6,6 +6,7 @@
 The package can be installed directly from github:
 ```R
 # install.packages(devtools)
+library(devtools)
 devtools::install_github("mlondschien/hdcd")
 ``` 
 

@@ -1,5 +1,5 @@
 # High-dimensional change point detection
-`hdcd` is a package for multivariate, or even **h**igh-**d**imensional **c**hange point **d**etection methods. It implements change point detection for (high-dimensional) Gaussian Graphical Models (GGMs) with possibly missing values as described in the paper [1]: _Change point detection for graphical models in the presence of missing values_, see  [here](https://arxiv.org/abs/1907.05409) for a preprint. Additionally, the `hdcd` package also implements some ongoing work on multivariate nonparametric change point detection from the preprint [2].
+`hdcd` is a package for multivariate, or even **h**igh-**d**imensional **c**hange point **d**etection methods. It implements change point detection for (high-dimensional) Gaussian Graphical Models (GGMs) with possibly missing values as described in the paper [1]: _Londschien, Kovács and Bühlmann: "Change point detection for graphical models in the presence of missing values"_, see  [here](https://arxiv.org/abs/1907.05409) for a preprint. Additionally, the `hdcd` package also implements some ongoing work on multivariate nonparametric change point detection from [2].
 
 
 ## Installation of the hdcd package
@@ -17,11 +17,11 @@ The following code snippet generates a `p = 100` dimensional time series of `n =
 
 ```R
 set.seed(0)
-model <- hdcd::create_model(n=500, p=100, c(120, 240, 310), hdcd::ChainNetwork)
+model <- hdcd::create_model(n = 500, p = 100, c(120, 240, 310), hdcd::ChainNetwork)
 x <- hdcd::simulate_from_model(model)
 ```
 
-We then use the main algorithm from [1] to find change points in the GGM structure. Note that we specify `method="glasso"` to use the graphical lasso ([3]) based loss and to estimate within segment precision matrices using the [glasso](https://cran.r-project.org/web/packages/glasso/index.html) package [3]. We use Optimistic Binary Segmentation (OBS) here, as the `"section_search"` optimizer (i.e. naive Optimistic Search) was selected for finding the "best" split point candidate in each step and Binary Segmentation style algorithm is the default. This reduces computation time drastically. To perform the computationally more expensive full grid search, one can set the optimizer to `"line_search"`. This would then correspond to the traditional Binary Segmentation based change point detection. We use the default value of `delta = 0.1` for the minimal relative segment length and let `hdcd` find a suitable initial regularization parameter `lambda`. Note that running `hdcd` might take a few seconds due to the high-dimensionality of the simulated dataset.
+We then use the main algorithm from [1] to find change points in the GGM structure. Note that we specify `method = "glasso"` to use the graphical lasso ([3]) based loss and to estimate within segment precision matrices using the [glasso](https://cran.r-project.org/web/packages/glasso/index.html) package of [3]. We use Optimistic Binary Segmentation (OBS) here, as the `"section_search"` optimizer (i.e. naive Optimistic Search) was selected for finding the "best" split point candidate in each step and Binary Segmentation style algorithm is the default. This reduces computation time drastically. To perform the computationally more expensive full grid search, one can set the optimizer to `"line_search"`. This would then correspond to the traditional Binary Segmentation based change point detection. We use the default value of `delta = 0.1` for the minimal relative segment length and let `hdcd` find a suitable initial regularization parameter `lambda`. Note that running `hdcd` might take a few seconds due to the high-dimensionality of the simulated dataset.
 ```R
 tree <- hdcd::hdcd(x, method = "glasso", optimizer = "section_search")
 tree

@@ -41,7 +41,7 @@ tree
 # 12      ¦--(310 397]                  NA       NA  2311.062             NA 0.19642644
 # 13      °--(397 500]                  NA       NA  2712.200             NA 0.13889447
 ```
-The returned object is a `binary_segmentation_tree`, which inherits from `data.tree::Node`. Each node in the tree corresponds to one segment, with attributes `start`, `split_point`, `end`, `gain` and `max_gain`. In our setting using the glasso method each node also has an attribute `cv_improvement`, which is calculated as the cross validated increase in likelihood when splitting the segment `(start, end]` at `split_point`. The attribute `lambda` is the optimal regularization parameter (as determined by the cross validation procedure) and it used for the given segment for splitting. `hdcd` stops splitting when `cv_improvement <= 0`. Note that `split_point`s with positive `cv_improvement` are given as 120 189 240 310, which are exactly the true underlying change points up to one false positive (at observation 189). These can be extracted from the saved `tree` with the method `hdcd::get_change_points_from_tree`. 
+The returned object is a `binary_segmentation_tree`, which inherits from `data.tree::Node`. Each node in the tree corresponds to one segment, with attributes `start`, `split_point`, `end`, `gain` and `max_gain`. In our setting using the glasso method each node also has an attribute `cv_improvement`, which is calculated as the cross validated increase in likelihood when splitting the segment `(start, end]` at `split_point`. The attribute `lambda` is the optimal regularization parameter (as determined by the cross validation procedure) and it used for the given segment for splitting. `hdcd` stops splitting when `cv_improvement <= 0`. Note that `split_point`s with positive `cv_improvement` are given as 120, 189, 240 and 310, which are exactly the true underlying change points up to one false positive (at observation 189). These can be extracted from the saved `tree` with the method `hdcd::get_change_points_from_tree`. 
 
 ```R
 hdcd::get_change_points_from_tree(tree)
@@ -70,8 +70,8 @@ tree_deleted
 # 11  °--(310 500]                     400 1.5274985 3706.536      -74.70367 0.12216187
 # 12      ¦--(310 400]                  NA        NA 1772.515             NA 0.17276297
 # 13      °--(400 500]                  NA        NA 2008.725             NA 0.17276297
- hdcd::get_change_points_from_tree(tree)
-# [1] 120 189 240 310
+ hdcd::get_change_points_from_tree(tree_deleted)
+# [1] ........
 ```
 
 ## References

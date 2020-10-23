@@ -55,7 +55,6 @@ hdcd::get_change_points_from_tree(tree)
 x_deleted    <- hdcd::delete_values(x, 0.3, "mcar")
 tree_deleted <- hdcd::hdcd(x_deleted, method = "glasso", optimizer = "section_search")
 tree_deleted
-> tree_deleted
 #                    levelName split_point  max_gain  cv_loss cv_improvement     lambda
 # 1  (0 500]                           310 5.8346049 9958.733       80.24636 0.08638148
 # 2   ¦--(0 310]                       120 2.6951306 6171.951       41.34443 0.12216187
@@ -71,7 +70,7 @@ tree_deleted
 # 12      ¦--(310 400]                  NA        NA 1772.515             NA 0.17276297
 # 13      °--(400 500]                  NA        NA 2008.725             NA 0.17276297
  hdcd::get_change_points_from_tree(tree_deleted)
-# [1] ........
+[1]  64 120 174 240 310
 ```
 
 ## References

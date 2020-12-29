@@ -197,6 +197,7 @@ classifier_gain_function <-
 #' will itself return a closure with arguments \code{split_point} and \code{split_candidates}.
 #' Evaluated this function returns the gain when splitting the segment \code{(start, end]} of \code{x}
 #'  at \code{split_point}.
+#' @export
 glasso_gain_function <-
   function(x, start, end, lambda, control = hdcd_control()) {
     if (is.null(lambda)) {

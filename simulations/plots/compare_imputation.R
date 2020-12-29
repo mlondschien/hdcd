@@ -1,4 +1,4 @@
-library(hdcdwithmissingvalues)
+library(hdcd)
 
 set.seed(1)
 x <- simulate_from_model(model <- create_model(500, 100, c(120, 240, 310), RandomNetwork))
@@ -6,15 +6,15 @@ x_del_blockwise <- delete_values(x, 0.3, 'blockwise')
 x_del_mcar <- delete_values(x, 0.3, 'mcar')
 
 lambda <- 0.1
-curve_complete <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(segment_loss_min_points = 5, n_obs = 500))(x, start = 0, end = 500, lambda = lambda))
+curve_complete <- lapply(5 : 49, function(y) glasso_gain_function(x, start = 0, end = 500, lambda = lambda)(y)$gain[y])
 
-curve_loh_mcar <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(glasso_NA_method = 'loh', segment_loss_min_points = 5, n_obs = 500))(x_del_mcar, start = 0, end = 500, lambda = lambda))
-curve_pair_mcar <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(glasso_NA_method = 'pair', segment_loss_min_points = 5, n_obs = 500))(x_del_mcar, start = 0, end = 500, lambda = lambda))
-curve_av_mcar <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(glasso_NA_method = 'av', segment_loss_min_points = 5, n_obs = 500))(x_del_mcar, start = 0, end = 500, lambda = lambda))
+curve_loh_mcar <- sapply(5 : 495, function(y) glasso_gain_function(x_del_mcar, start = 0, end = 500, lambda = lambda, control = hdcd_control(glasso_NA_method = 'loh'))$gain[y])
+curve_pair_mcar <- sapply(5 : 495, function(y) glasso_gain_function(x_del_mcar, start = 0, end = 500, lambda = lambda, control = hdcd_control(glasso_NA_method = 'pair'))$gain[y])
+curve_av_mcar <- sapply(5 : 495, function(y) glasso_gain_function(x_del_mcar, start = 0, end = 500, lambda = lambda, control = hdcd_control(glasso_NA_method = 'av'))$gain[y])
 
-curve_loh_blockwise <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(glasso_NA_method = 'loh', segment_loss_min_points = 5, n_obs = 500))(x_del_blockwise, start = 0, end = 500, lambda = lambda))
-curve_pair_blockwise <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(glasso_NA_method = 'pair', segment_loss_min_points = 5, n_obs = 500))(x_del_blockwise, start = 0, end = 500, lambda = lambda))
-curve_av_blockwise <- sapply(5 : 495, get_glasso_gain_function(hdcd_control(glasso_NA_method = 'av', segment_loss_min_points = 5, n_obs = 500))(x_del_blockwise, start = 0, end = 500, lambda = lambda))
+curve_loh_blockwise <- sapply(5 : 495, function(y) glasso_gain_function(x_del_blockwise, start = 0, end = 500, lambda = lambda, control = hdcd_control(glasso_NA_method = 'loh'))$gain[y])
+curve_pair_blockwise <- sapply(5 : 495, function(y) glasso_gain_function(x_del_blockwise, start = 0, end = 500, lambda = lambda, control = hdcd_control(glasso_NA_method = 'pair'))$gain[y])
+curve_av_blockwise <- sapply(5 : 495, function(y) glasso_gain_function(x_del_blockwise, start = 0, end = 500, lambda = lambda, control = hdcd_control(glasso_NA_method = 'av'))$gain[y])
                           
 
 library(cowplot)

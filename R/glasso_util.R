@@ -168,7 +168,7 @@ get_glasso_fit <- function(x, lambda, control) {
   penalize_diagonal <- control$glasso_penalize_diagonal
   standardize <- control$glasso_standardize
   threshold <- 1e-4
-  min_points <- 2
+  min_points <- 5
   NA_method <- control$glasso_NA_method
   n_obs <- nrow(x)
   

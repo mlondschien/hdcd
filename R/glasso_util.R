@@ -163,6 +163,7 @@ loglikelihood <- function(x, mu, cov_mat_inv) {
 #' \code{inds} an array indicating the variables for which a variance could be estimated, 
 #' the precision matrix estimated with the glasso \code{wi} and its inverse \code{w}. 
 #' @importFrom glasso glasso
+#' @export
 get_glasso_fit <- function(x, lambda, control) {
   
   penalize_diagonal <- control$glasso_penalize_diagonal

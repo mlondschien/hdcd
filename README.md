@@ -27,50 +27,50 @@ We then use the main algorithm from [1] to find change points in the GGM structu
 tree <- hdcd::hdcd(x, method = "glasso", optimizer = "section_search")
 tree
 #                    levelName split_point max_gain   cv_loss cv_improvement     lambda
-# 1  (0 500]                           310 9.358010 14023.112     361.784038 0.06944723
-# 2   ¦--(0 310]                       120 5.408330  8643.766     225.420988 0.09821322
-# 3   ¦   ¦--(0 120]                    65 2.866239  3138.095    -108.436406 0.09821322
-# 4   ¦   ¦   ¦--(0 65]                 NA       NA  1719.972             NA 0.19642644
-# 5   ¦   ¦   °--(65 120]               NA       NA  1526.559             NA 0.19642644
-# 6   ¦   °--(120 310]                 240 4.592640  5280.250     190.629298 0.13889447
-# 7   ¦       ¦--(120 240]             189 2.251111  3160.787      60.582240 0.13889447
-# 8   ¦       ¦   ¦--(120 189]          NA       NA  1763.735             NA 0.19642644
-# 9   ¦       ¦   °--(189 240]          NA       NA  1336.470             NA 0.27778893
-# 10  ¦       °--(240 310]              NA       NA  1928.833             NA 0.19642644
-# 11  °--(310 500]                     397 3.162574  5017.562      -5.699871 0.06944723
-# 12      ¦--(310 397]                  NA       NA  2311.062             NA 0.19642644
-# 13      °--(397 500]                  NA       NA  2712.200             NA 0.13889447
+# 1  (0 500]                           310 9.201834 14003.254     366.877394 0.05592379
+# 2   ¦--(0 310]                       120 6.443479  8630.149     248.956480 0.07040388
+# 3   ¦   ¦--(0 120]                    65 2.649532  3125.832    -113.364558 0.11158263
+# 4   ¦   ¦   ¦--(0 65]                 NA       NA  1719.190             NA 0.22263662
+# 5   ¦   ¦   °--(65 120]               NA       NA  1520.007             NA 0.22263662
+# 6   ¦   °--(120 310]                 240 4.946971  5255.360     179.297754 0.11158263
+# 7   ¦       ¦--(120 240]             170 2.262078  3146.867     -82.117642 0.14047421
+# 8   ¦       ¦   ¦--(120 170]          NA       NA  1386.386             NA 0.28028290
+# 9   ¦       ¦   °--(170 240]          NA       NA  1842.599             NA 0.22263662
+# 10  ¦       °--(240 310]              NA       NA  1929.196             NA 0.22263662
+# 11  °--(310 500]                     397 2.859732  5006.227      -6.237342 0.08863323
+# 12      ¦--(310 397]                  NA       NA  2304.448             NA 0.17684655
+# 13      °--(397 500]                  NA       NA  2708.017             NA 0.14047421
 ```
-The returned object is a `binary_segmentation_tree`, which inherits from `data.tree::Node`. Each node in the tree corresponds to one segment, with attributes `start`, `split_point`, `end`, `gain` and `max_gain`. In our setting using the glasso method each node also has an attribute `cv_improvement`, which is calculated as the cross validated increase in likelihood when splitting the segment `(start, end]` at `split_point`. The attribute `lambda` is the optimal regularization parameter (as determined by the cross validation procedure) and it used for the given segment for splitting. `hdcd` stops splitting when `cv_improvement <= 0`. Note that `split_point`s with positive `cv_improvement` are given as 120, 189, 240 and 310, which are exactly the true underlying change points up to one false positive (at observation 189). These can be extracted from the saved `tree` with the method `hdcd::get_change_points_from_tree`. 
+The returned object is a `binary_segmentation_tree`, which inherits from `data.tree::Node`. Each node in the tree corresponds to one segment, with attributes `start`, `split_point`, `end`, `gain` and `max_gain`. In our setting using the glasso method each node also has an attribute `cv_improvement`, which is calculated as the cross validated increase in likelihood when splitting the segment `(start, end]` at `split_point`. The attribute `lambda` is the optimal regularization parameter (as determined by the cross validation procedure) and it used for the given segment for splitting. `hdcd` stops splitting when `cv_improvement <= 0`. Note that `split_point`s with positive `cv_improvement` are given as 120, 240 and 310, which are exactly the true underlying change points. These can be extracted from the saved `tree` with the method `hdcd::get_change_points_from_tree`. 
 
 ```R
 hdcd::get_change_points_from_tree(tree)
-# [1] 120 189 240 310
+# [1] 120 240 310
 ```
 
 ## Example: detecting changes in a GGM with missing values
-`hdcd` can also handle missing values according to the methodology described in [1]. We delete 30% of entries of the matrix `x` completely at random and run our procedure again. We take the default imputation method, which is the Loh-Wainwrigth bias correction approach.
+`hdcd` can also handle missing values according to the methodology described in [1]. We delete 40% of entries of the matrix `x` completely at random and run our procedure again. We take the default imputation method, which is the Loh-Wainwrigth bias correction approach. The algorithm still succeeds to approximately recover the original change points.
 
 ```R
-x_deleted    <- hdcd::delete_values(x, 0.3, "mcar")
+x_deleted    <- hdcd::delete_values(x, 0.4, "mcar")
 tree_deleted <- hdcd::hdcd(x_deleted, method = "glasso", optimizer = "section_search")
 tree_deleted
-#                    levelName split_point  max_gain  cv_loss cv_improvement     lambda
-# 1  (0 500]                           310 5.8346049 9958.733       80.24636 0.08638148
-# 2   ¦--(0 310]                       120 2.6951306 6171.951       41.34443 0.12216187
-# 3   ¦   ¦--(0 120]                    64 1.4492266 2332.666       64.51703 0.12216187
-# 4   ¦   ¦   ¦--(0 64]                 NA        NA 1163.530             NA 0.24432373
-# 5   ¦   ¦   °--(64 120]               NA        NA 1104.620             NA 0.24432373
-# 6   ¦   °--(120 310]                 240 1.8061935 3797.940       67.46934 0.17276297
-# 7   ¦       ¦--(120 240]             174 0.9893486 2331.568       23.00253 0.17276297
-# 8   ¦       ¦   ¦--(120 174]          NA        NA 1047.984             NA 0.24432373
-# 9   ¦       ¦   °--(174 240]          NA        NA 1260.582             NA 0.24432373
-# 10  ¦       °--(240 310]              NA        NA 1398.903             NA 0.17276297
-# 11  °--(310 500]                     400 1.5274985 3706.536      -74.70367 0.12216187
-# 12      ¦--(310 400]                  NA        NA 1772.515             NA 0.17276297
-# 13      °--(400 500]                  NA        NA 2008.725             NA 0.17276297
- hdcd::get_change_points_from_tree(tree_deleted)
-[1]  64 120 174 240 310
+#                    levelName split_point max_gain   cv_loss cv_improvement    lambda
+# 1  (0 500]                           310 4.756226 8586.2079       42.32761 0.1030157
+# 2   ¦--(0 310]                       118 1.901519 5318.4926      183.65402 0.1296891
+# 3   ¦   ¦--(0 118]                    65 1.049296 1952.1950      -53.64900 0.1296891
+# 4   ¦   ¦   ¦--(0 65]                 NA       NA 1104.9134             NA 0.1632689
+# 5   ¦   ¦   °--(65 118]               NA       NA  900.9306             NA 0.2055434
+# 6   ¦   °--(118 310]                 226 1.627940 3182.6435       40.72925 0.1296891
+# 7   ¦       ¦--(118 226]             174 1.005050 1778.5837      -52.08288 0.1296891
+# 8   ¦       ¦   ¦--(118 174]          NA       NA  968.1591             NA 0.1296891
+# 9   ¦       ¦   °--(174 226]          NA       NA  862.5074             NA 0.2055434
+# 10  ¦       °--(226 310]              NA       NA 1363.3306             NA 0.1632689
+# 11  °--(310 500]                     390 1.048517 3225.3877      -78.84160 0.1296891
+# 12      ¦--(310 390]                  NA       NA 1363.3497             NA 0.1632689
+# 13      °--(390 500]                  NA       NA 1940.8796             NA 0.1296891
+hdcd::get_change_points_from_tree(tree_deleted)
+[1]  118 226 310
 ```
 
 ## References

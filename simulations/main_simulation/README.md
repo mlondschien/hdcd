@@ -9,4 +9,4 @@ The results of the simulation will be stored in an `rds` file, names via the par
 
 The files `simulation_line.txt` and `simulation_section.txt` contain bash code to run simulations for different setups.
 
-The `aggregate_simulation_results.R` file contains code to read in the `rds` files from the simulations, aggregate the simulation results, and produce latex code for tables 1 and 2. Note that it might be necessary to adjust `directory`. The archive `/data/simulation_results.zip` contains results used to create the figures of the original document.
+The `aggregate_simulation_results.R` file contains code to read in the `rds` files from the simulations, aggregate the simulation results, and produce latex code for tables 1 and 2. Note that it might be necessary to adjust `directory`.

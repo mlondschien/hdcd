@@ -4,7 +4,8 @@
 \alias{classifier_loglikelihood}
 \title{Loglikelihood from classifier}
 \usage{
-classifier_loglikelihood(y_train, predictions, y_test = y_train, oob = F)
+classifier_loglikelihood(y_train, predictions, y_test = y_train,
+  oob = F)
 }
 \arguments{
 \item{y_train}{training labels}

@@ -4,28 +4,17 @@
 \alias{hdcd_control}
 \title{Create an object of class hdcd_control to supply parameters to \link{hdcd}}
 \usage{
-hdcd_control(
-  glasso_cv_inner = TRUE,
-  glasso_cv_inner_lambda = NULL,
-  glasso_cv_inner_randomize_folds = FALSE,
-  glasso_cv_inner_n_folds = 5,
-  glasso_cv_inner_lambda_stepsize = sqrt(2),
+hdcd_control(glasso_cv_inner = TRUE, glasso_cv_inner_lambda = NULL,
+  glasso_cv_inner_randomize_folds = FALSE, glasso_cv_inner_n_folds = 5,
+  glasso_cv_inner_lambda_stepsize = 0.1^0.1,
   glasso_NA_method = "loh_wainwright_bias_correction",
-  glasso_standardize = TRUE,
-  glasso_penalize_diagonal = FALSE,
-  classifier_oob = TRUE,
-  section_search_min_points = 5,
-  section_search_stepsize = 0.1,
-  random_forest_n_tree = 600,
-  random_forest_mtry = NULL,
-  random_forest_sample_fraction = 1,
-  kNN_k = function(x) ceiling(sqrt(x)),
-  wbs_n_segments = 100,
-  sbs_alpha = 1/sqrt(2),
-  permutation_test = FALSE,
-  permutation_test_pvalue = 0.05,
-  permutation_test_n = 400
-)
+  glasso_standardize = TRUE, glasso_penalize_diagonal = FALSE,
+  classifier_oob = TRUE, section_search_min_points = 5,
+  section_search_stepsize = 0.5, random_forest_n_tree = 600,
+  random_forest_mtry = NULL, random_forest_sample_fraction = 1,
+  kNN_k = function(x) ceiling(sqrt(x)), wbs_n_segments = 100,
+  sbs_alpha = 1/sqrt(2), permutation_test = FALSE,
+  permutation_test_pvalue = 0.05, permutation_test_n = 400)
 }
 \arguments{
 \item{glasso_cv_inner}{Should change points be selected according to inner cross validation in the glassocd procedure.}

@@ -4,14 +4,8 @@
 \alias{ScaleNetwork}
 \title{ScaleNetwork}
 \usage{
-ScaleNetwork(
-  p,
-  preferential_power = 1,
-  u = 0.1,
-  v = 0.3,
-  prec_mat = T,
-  scaled = F
-)
+ScaleNetwork(p, preferential_power = 1, u = 0.1, v = 0.3,
+  prec_mat = T, scaled = F)
 }
 \arguments{
 \item{p}{Positive integer.The desired number of dimensions.}

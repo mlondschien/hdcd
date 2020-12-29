@@ -4,16 +4,9 @@
 \alias{hdcd}
 \title{High-dimensional change point detection}
 \usage{
-hdcd(
-  x,
-  delta = 0.1,
-  gamma = 0,
-  lambda = NULL,
-  method = NULL,
-  optimizer = "line_search",
-  segmentation = "BS",
-  control = hdcd_control()
-)
+hdcd(x, delta = 0.1, gamma = 0, lambda = NULL, method = NULL,
+  optimizer = "line_search", segmentation = "BS",
+  control = hdcd_control())
 }
 \arguments{
 \item{x}{A matrix with observations in rows}

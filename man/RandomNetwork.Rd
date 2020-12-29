@@ -4,14 +4,8 @@
 \alias{RandomNetwork}
 \title{RandomNetwork}
 \usage{
-RandomNetwork(
-  p,
-  prob = min(1, 5/p),
-  u = 0.1,
-  v = 0.3,
-  prec_mat = F,
-  scaled = F
-)
+RandomNetwork(p, prob = min(1, 5/p), u = 0.1, v = 0.3,
+  prec_mat = F, scaled = F)
 }
 \arguments{
 \item{p}{Positive integer.The desired number of dimensions.}

@@ -4,12 +4,9 @@
 \alias{get_cov_mat}
 \title{Calculate a covariance matrix}
 \usage{
-get_cov_mat(
-  x,
-  NA_method = c("complete_observations", "pairwise_covariance",
-    "loh_wainwright_bias_correction", "average_imputation"),
-  min_points = 2
-)
+get_cov_mat(x, NA_method = c("complete_observations",
+  "pairwise_covariance", "loh_wainwright_bias_correction",
+  "average_imputation"), min_points = 2)
 }
 \arguments{
 \item{x}{A n x p design matrix}

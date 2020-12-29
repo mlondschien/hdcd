@@ -4,7 +4,8 @@
 \alias{draw_segments}
 \title{Draw segment (-boundaries) for WBS or BS}
 \usage{
-draw_segments(n, n_segments = n, delta = 0.1, segmentation = "BS", alpha = 1/2)
+draw_segments(n, n_segments = n, delta = 0.1, segmentation = "BS",
+  alpha = 1/2)
 }
 \arguments{
 \item{n}{total number of observations available}

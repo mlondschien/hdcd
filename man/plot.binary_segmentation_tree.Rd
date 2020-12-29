@@ -4,7 +4,8 @@
 \alias{plot.binary_segmentation_tree}
 \title{S3 Method for plotting an object of class binary_segmentation_tree}
 \usage{
-\method{plot}{binary_segmentation_tree}(x, true_change_points = NULL, ...)
+\method{plot}{binary_segmentation_tree}(x, true_change_points = NULL,
+  ...)
 }
 \arguments{
 \item{x}{An object of class binary_segmentation_tree}

@@ -4,12 +4,8 @@
 \alias{RegrowNetwork}
 \title{RegrowNetwork}
 \usage{
-RegrowNetwork(
-  omega,
-  n_nodes = ncol(omega) * 0.1,
-  preferential_power = 1,
-  v = 0.3
-)
+RegrowNetwork(omega, n_nodes = ncol(omega) * 0.1,
+  preferential_power = 1, v = 0.3)
 }
 \arguments{
 \item{omega}{A precision matrix as created by ScaleNetwork}

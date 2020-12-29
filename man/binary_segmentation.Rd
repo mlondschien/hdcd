@@ -4,16 +4,9 @@
 \alias{binary_segmentation}
 \title{Binary Segmentation}
 \usage{
-binary_segmentation(
-  x,
-  get_best_split,
-  delta,
-  lambda = 0,
-  gamma = 0,
-  segmentation = "BS",
-  cross_validation_function = NULL,
-  control = hdcd_control()
-)
+binary_segmentation(x, get_best_split, delta, lambda = 0, gamma = 0,
+  segmentation = "BS", cross_validation_function = NULL,
+  control = hdcd_control())
 }
 \arguments{
 \item{x}{An n x p data matrix}
